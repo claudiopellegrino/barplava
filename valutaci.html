@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lascia la tua recensione</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="font-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root {
+  --paper: #fff7ef;
+  --surface: #fffdf8;
+  --line: rgba(24,19,15,0.14);
+  --ink: #18130f;
+  --muted: #755f56;
+  --red: #e13223;
+  --blue: #172f42;
+  --mint: #69d2b8;
+  --butter: #f6d56d;
+  --head: "Fraunces", Georgia, serif;
+  --body: "Inter", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html {
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  min-height: 100svh;
+  margin: 0;
+  font-family: var(--body);
+  background:
+    linear-gradient(90deg, rgba(225,50,35,0.08) 1px, transparent 1px),
+    linear-gradient(180deg, var(--paper), var(--surface) 58%, #f7eadf);
+  background-size: 42px 42px, auto;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: clamp(0.9rem, 3vw, 2.4rem);
+}
+.topbar {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.brand {
+  font-family: var(--head);
+  font-size: clamp(1.15rem, 3vw, 1.8rem);
+  font-weight: 800;
+  color: var(--red);
+  text-decoration: none;
+}
+.shell {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  align-items: center;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+}
+.review-card {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.72fr);
+  min-height: min(760px, calc(100svh - 9rem));
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 30px 90px rgba(24,19,15,0.12);
+  overflow: hidden;
+}
+.media {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--blue);
+}
+.media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.02) brightness(0.86);
+}
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(23,47,66,0.76), rgba(23,47,66,0.12)),
+    linear-gradient(180deg, transparent, rgba(23,47,66,0.52));
+}
+.media-mark {
+  position: absolute;
+  left: clamp(1rem, 4vw, 2rem);
+  bottom: clamp(1rem, 4vw, 2rem);
+  z-index: 1;
+  width: min(78%, 520px);
+  color: var(--surface);
+  font-family: var(--head);
+  font-size: clamp(3.4rem, 9vw, 8.8rem);
+  font-weight: 900;
+  line-height: 0.82;
+  overflow-wrap: anywhere;
+}
+.panel {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  
+  min-width: 0;
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  right: clamp(1rem, 4vw, 2rem);
+  top: clamp(1rem, 4vw, 2rem);
+  width: clamp(70px, 10vw, 120px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(225,50,35,0.28);
+  border-radius: 50%;
+}
+h1 {
+  position: relative;
+  margin: 0;
+  font-family: var(--head);
+  font-size: clamp(2.55rem, 6vw, 6.2rem);
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--red);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  max-width: 100%;
+}
+.intro {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--blue);
+  font-size: clamp(0.98rem, 2vw, 1.1rem);
+  line-height: 1.65;
+  font-weight: 500;
+}
+.stars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.45rem, 1.6vw, 0.8rem);
+}
+.star {
+  width: clamp(3rem, 8vw, 4.8rem);
+  height: clamp(3rem, 8vw, 4.8rem);
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: rgba(24,19,15,0.32);
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.star svg {
+  width: 54%;
+  height: 54%;
+  fill: currentColor;
+}
+.star:hover,
+.star.is-active {
+  color: var(--butter);
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: translateY(-2px);
+}
+.stars.low .star.is-active {
+  color: var(--red);
+}
+.response {
+  display: none;
+  gap: 1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+.response.is-visible {
+  display: grid;
+}
+.response-text,
+.response-note {
+  margin: 0;
+  max-width: 48ch;
+  color: rgba(24,19,15,0.74);
+  line-height: 1.65;
+}
+.response-note {
+  color: var(--blue);
+  font-weight: 700;
+}
+.cta {
+  width: fit-content;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.3rem;
+  border-radius: 999px;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: var(--surface);
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 18px 35px rgba(225,50,35,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cta:hover,
+.cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 50px rgba(24,19,15,0.18);
+}
+.cta[hidden] { display: none; }
+.load-error {
+  display: none;
+  color: var(--red);
+  font-weight: 700;
+}
+.load-error.is-visible { display: block; }
+@media (max-width: 860px) {
+  .review-card {
+    grid-template-columns: 1fr;
+  }
+  .media {
+    min-height: 310px;
+  }
+  .media-mark {
+    font-size: clamp(3rem, 16vw, 5.4rem);
+  }
+}
+@media (max-width: 520px) {
+  .page {
+    padding: 0.85rem;
+  }
+  .review-card {
+    min-height: auto;
+  }
+  .media {
+    min-height: 260px;
+  }
+  .panel {
+    padding: 1.05rem;
+  }
+  h1 {
+    font-size: clamp(2.15rem, 11vw, 2.85rem);
+    line-height: 0.96;
+  }
+  .stars {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+  }
+  .star {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .cta {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html" id="brand"></a>
+  </header>
+  <div class="shell">
+    <section class="review-card" aria-live="polite">
+      <figure class="media" aria-hidden="true">
+        <img id="cover" alt="">
+        <figcaption class="media-mark" id="media-mark"></figcaption>
+      </figure>
+      <div class="panel">
+        <h1 id="question"></h1>
+        <p class="intro" id="intro"></p>
+        <div class="stars" id="stars"></div>
+        <div class="response" id="response">
+          <p class="response-text" id="response-text"></p>
+          <p class="response-note" id="response-note"></p>
+          <a class="cta" id="response-cta" target="_blank" rel="noopener"></a>
+        </div>
+        <p class="load-error" id="load-error"></p>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+"use strict";
+const $ = (selector) => document.querySelector(selector);
+const clean = (value) => String(value ?? "").trim();
+const isHttpLike = (value) => /^(https?:)?\/\//i.test(value);
+const PALETTES = {
+  PLAVA_CREMA_ROSSO: ["#fff7ef", "#fffdf8", "rgba(24,19,15,0.14)", "#18130f", "#755f56", "#e13223", "#172f42", "#69d2b8", "#f6d56d"],
+  BANCO_MENTA: ["#e9fbf3", "#fffdf8", "rgba(23,47,66,0.14)", "#172f42", "#4d746b", "#e13223", "#102532", "#69d2b8", "#f6d56d"],
+  SERA_APERITIVO: ["#961d31", "#fff7ef", "rgba(255,253,248,0.24)", "#fffdf8", "#f1c4bd", "#f6d56d", "#18130f", "#69d2b8", "#e13223"],
+  CAFFE_INCHIOSTRO: ["#172f42", "#fffdf8", "rgba(255,253,248,0.22)", "#fffdf8", "#abc8c2", "#69d2b8", "#101f2d", "#e13223", "#f6d56d"]
+};
+const FONTS = {
+  PLAVA_EDITORIALE: ['"Fraunces", Georgia, serif', '"Inter", system-ui, sans-serif', "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap"],
+  BANCO_MODERNO: ['"Syne", system-ui, sans-serif', '"Inter", system-ui, sans-serif', "https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"],
+  CAFFE_CLASSICO: ['"DM Serif Display", Georgia, serif', '"Source Sans 3", system-ui, sans-serif', "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700;800&display=swap"],
+  APERITIVO_GROTESK: ['"Bricolage Grotesque", system-ui, sans-serif', '"Manrope", system-ui, sans-serif', "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"]
+};
+function applyTheme(cfg) {
+  const palette = PALETTES[clean(cfg.tema_palette)] || PALETTES.PLAVA_CREMA_ROSSO;
+  const vars = ["--paper", "--surface", "--line", "--ink", "--muted", "--red", "--blue", "--mint", "--butter"];
+  vars.forEach((key, index) => document.documentElement.style.setProperty(key, palette[index]));
+  const font = FONTS[clean(cfg.tema_tipografico)] || FONTS.PLAVA_EDITORIALE;
+  document.documentElement.style.setProperty("--head", font[0]);
+  document.documentElement.style.setProperty("--body", font[1]);
+  $("#font-link").href = font[2];
+}
+function url(value) {
+  const raw = clean(value);
+  if (!raw) return "";
+  if (isHttpLike(raw) || /^mailto:|^tel:/i.test(raw)) return raw;
+  return "https://" + raw;
+}
+function tel(value) {
+  return clean(value).replace(/[^0-9+]/g, "");
+}
+function ctaHref(cfg, type) {
+  const action = clean(type).toUpperCase();
+  if (action === "WHATSAPP") {
+    const number = tel(cfg.footer_whatsapp).replace(/^\+/, "");
+    return number ? "https://wa.me/" + number : "";
+  }
+  if (action === "EMAIL") return clean(cfg.footer_email) ? "mailto:" + clean(cfg.footer_email) : "";
+  if (action === "TELEFONO") return tel(cfg.footer_telefono) ? "tel:" + tel(cfg.footer_telefono) : "";
+  return "";
+}
+async function loadConfig() {
+  try {
+    const local = localStorage.getItem("ompage_local_config");
+    if (local) return JSON.parse(local);
+  } catch (error) {}
+  const response = await fetch("config.json?ts=" + Date.now());
+  if (!response.ok) throw new Error("config");
+  return response.json();
+}
+function starSvg() {
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.4l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.2l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.4z"/></svg>';
+}
+function setRating(value, cfg) {
+  const stars = $("#stars");
+  stars.classList.toggle("low", value <= 3);
+  stars.querySelectorAll(".star").forEach((button) => {
+    button.classList.toggle("is-active", Number(button.dataset.value) <= value);
+  });
+  const isPublic = value >= 4;
+  $("#response-text").textContent = isPublic ? clean(cfg.valutaci_testo_soddisfatto) : clean(cfg.valutaci_testo_insoddisfatto);
+  $("#response-note").textContent = isPublic ? clean(cfg.valutaci_nota_soddisfatto) : "";
+  const cta = $("#response-cta");
+  cta.textContent = isPublic ? clean(cfg.valutaci_cta_soddisfatto_testo) : clean(cfg.valutaci_cta_insoddisfatto_testo);
+  cta.href = isPublic ? url(cfg.link_recensioni_google) : ctaHref(cfg, cfg.valutaci_cta_insoddisfatto_tipo);
+  cta.hidden = !clean(cta.textContent) || !clean(cta.href);
+  $("#response").classList.add("is-visible");
+}
+function initStars(cfg) {
+  const wrap = $("#stars");
+  wrap.innerHTML = "";
+  for (let i = 1; i <= 5; i += 1) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "star";
+    button.dataset.value = String(i);
+    button.setAttribute("aria-label", String(i) + "/5");
+    button.innerHTML = starSvg();
+    button.addEventListener("click", () => setRating(i, cfg));
+    wrap.append(button);
+  }
+}
+function render(cfg) {
+  applyTheme(cfg);
+  const brand = clean(cfg.footer_nome) || clean(cfg.schema_nome) || clean(cfg.navbar_logo_testo);
+  document.title = brand ? brand + " | Recensioni" : document.title;
+  $("#brand").textContent = brand;
+  $("#media-mark").textContent = brand;
+  $("#question").textContent = clean(cfg.valutaci_domanda);
+  $("#intro").textContent = clean(cfg.valutaci_intro) || "";
+  const image = clean(cfg.hero_foto) || clean(cfg.hero_placeholder) || clean(cfg.og_immagine);
+  if (image) $("#cover").src = image;
+  initStars(cfg);
+}
+loadConfig().then(render).catch(() => {
+  $("#load-error").textContent = "config.json non disponibile";
+  $("#load-error").classList.add("is-visible");
+});
+</script>
+</body>
+</html>
